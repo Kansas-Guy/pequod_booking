@@ -1,0 +1,109 @@
+:root {
+  color-scheme: light;
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #1d2433;
+  --muted: #7a8397;
+  --accent: #2a6f97;
+  --available: #dff7e4;
+  --booked: #ffdce0;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.hero {
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #12355b, #2a6f97);
+  color: white;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr 320px;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 1rem;
+  box-shadow: 0 10px 20px rgba(18, 53, 91, 0.08);
+}
+
+button, .venmo {
+  background: var(--accent);
+  color: white;
+  border: 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+button.secondary { background: rgba(255,255,255,0.2); }
+
+.year-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  gap: 0.8rem;
+}
+
+.month h3 { margin: 0.3rem 0; }
+.weekday-row, .week-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.weekday-row span {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.day {
+  min-height: 24px;
+  border-radius: 4px;
+  text-align: center;
+  padding-top: 3px;
+  font-size: 0.75rem;
+}
+.day.available { background: var(--available); }
+.day.booked { background: var(--booked); }
+.day.muted { opacity: 0.2; }
+
+.legend { display: flex; gap: 0.8rem; align-items: center; font-size: 0.9rem; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.available { background: #53c271; }
+.dot.booked { background: #ea4f66; }
+
+.booking-list { list-style: none; padding: 0; margin: 0; }
+.booking-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.4rem;
+  border-bottom: 1px solid #ecf0f8;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+.small { color: var(--muted); }
+.message { color: #1f7a3a; font-weight: 600; }
+
+.auth-page { display: grid; min-height: 100vh; place-items: center; }
+.auth-card { width: 380px; }
+
+@media (max-width: 1200px) {
+  .layout { grid-template-columns: 1fr; }
+  .year-grid { grid-template-columns: repeat(2, minmax(220px, 1fr)); }
+}
+@media (max-width: 700px) {
+  .year-grid { grid-template-columns: 1fr; }
+}
