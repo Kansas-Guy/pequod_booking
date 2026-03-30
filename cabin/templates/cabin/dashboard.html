@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cabin Booking Calendar</title>
+  <link rel="stylesheet" href="/static/cabin/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>Green Mountain Falls Family Cabin</h1>
+      <p>${{ nightly_rate }} per night · Monday-first calendar · same-day bookings allowed</p>
+    </div>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="secondary">Logout</button>
+    </form>
+  </header>
+
+  <main class="layout">
+    <section class="card">
+      <h2>Book your stay</h2>
+      {% if messages %}
+        {% for message in messages %}
+          <p class="message">{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+      <form method="post" class="booking-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Reserve dates</button>
+      </form>
+      <p>After booking, complete payment with Venmo:</p>
+      <a class="venmo" href="{{ venmo_link }}" target="_blank" rel="noopener noreferrer">Pay on Venmo</a>
+    </section>
+
+    <section class="card">
+      <h2>{{ selected_year }} Availability</h2>
+      <p class="legend"><span class="dot available"></span>Available <span class="dot booked"></span>Booked</p>
+      <div class="year-grid">
+        {% for month in calendar_data %}
+          <article class="month">
+            <h3>{{ month.name }}</h3>
+            <div class="weekday-row">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+            {% for week in month.weeks %}
+              <div class="week-row">
+                {% for day in week %}
+                  <span class="day {% if day.in_month %}{{ day.status }}{% else %}muted{% endif %}">{{ day.day }}</span>
+                {% endfor %}
+              </div>
+            {% endfor %}
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Recent bookings</h2>
+      <ul class="booking-list">
+        {% for booking in bookings %}
+          <li>
+            <strong>{{ booking.user.username }}</strong>
+            {{ booking.start_date }} → {{ booking.end_date }}
+            <span>${{ booking.amount_due }}</span>
+          </li>
+        {% empty %}
+          <li>No bookings yet.</li>
+        {% endfor %}
+      </ul>
+      <p class="small">Admin controls are available at <a href="/admin/">/admin/</a>.</p>
+    </section>
+  </main>
+</body>
+</html>

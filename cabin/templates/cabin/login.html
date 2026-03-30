@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Cabin Login</title>
+  <link rel="stylesheet" href="/static/cabin/styles.css" />
+</head>
+<body class="auth-page">
+  <main class="card auth-card">
+    <h1>Green Mountain Falls Cabin</h1>
+    <p>Family login</p>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Log in</button>
+    </form>
+  </main>
+</body>
+</html>
